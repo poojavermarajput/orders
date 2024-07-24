@@ -23,7 +23,9 @@ public class InventoryRepositoryTests {
     @Test
     public void itTestsAddAndRetrievalOfInventory(){
         List<Inventory> inventoryList = new ArrayList<>();
-        Inventory inventory = new Inventory("apple", 10);
+        Inventory inventory = new Inventory();
+        inventory.setName("apple");
+        inventory.setPrice(10);
         inventoryList.add(inventory);
 
         List<Inventory> retrievedInventory = inventoryRepository.getInventory();
@@ -42,9 +44,13 @@ public class InventoryRepositoryTests {
     @Test
     public void itTestsPriceRetrievalOfInventory(){
         List<Inventory> inventoryList = new ArrayList<>();
-        Inventory inventory = new Inventory("apple", 10);
+        Inventory inventory = new Inventory();
+        inventory.setName("apple");
+        inventory.setPrice(10);
         inventoryList.add(inventory);
-        Inventory inventory2 = new Inventory("orange", 20);
+        Inventory inventory2 = new Inventory();
+        inventory.setName("orange");
+        inventory.setPrice(20);
         inventoryList.add(inventory2);
 
         inventoryRepository.addItems(inventoryList);

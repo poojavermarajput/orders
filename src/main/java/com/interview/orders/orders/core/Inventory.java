@@ -7,7 +7,7 @@ public class Inventory {
     private double price;
     private int id;
 
-    public Inventory(String name, double price) {
+    public Inventory() {
         this.name = name;
         this.price = price;
     }
