@@ -21,6 +21,7 @@ import java.util.Map;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
@@ -66,8 +67,15 @@ public class OrdersServiceTests {
         when(inventoryService.validateInventory(itemsNamesList)).thenReturn(true);
 
         when(inventoryService.getPrices(items.stream().map((Item::getName)).toList())).thenReturn(priceMap);
-        when(orderRepository.addOrder(items)).thenReturn(new Order(1, items));
-        Assert.assertEquals(ordersService.addOrder(items), orderSummaryExpected);
+
+       /* OrderSummary orderSummary = new OrderSummary(totalCost, itemCosts);
+        OrderSummary orderSummaryWithId = new OrderSummary(1, totalCost, itemCosts);
+        when(orderRepository.addOrder(orderSummary)).thenReturn(orderSummaryWithId);
+        Assert.assertEquals(ordersService.addOrder(items), orderSummaryExpected);*/
+
+        when(orderRepository.addOrder(new OrderSummary( orderSummaryExpected.getTotalCost(), itemCosts))).thenReturn(new OrderSummary(1, orderSummaryExpected.getTotalCost(), itemCosts));
+        OrderSummary orderSummaryActual = ordersService.addOrder(items);
+        Assert.assertEquals(orderSummaryActual, orderSummaryExpected);
     }
 
     @Test
@@ -90,7 +98,7 @@ public class OrdersServiceTests {
         when(offerService.getOfferByInventoryNames(anyList())).thenReturn(offerMap);
 
         when(inventoryService.getPrices(items.stream().map((Item::getName)).toList())).thenReturn(priceMap);
-        when(orderRepository.addOrder(items)).thenReturn(new Order(1, items));
+        when(orderRepository.addOrder(any())).thenReturn(new OrderSummary(1, orderSummaryExpected.getTotalCost(), itemsWithCosts));
         OrderSummary orderSummaryActual = ordersService.addOrder(items);
         Assert.assertEquals(orderSummaryActual, orderSummaryExpected);
     }

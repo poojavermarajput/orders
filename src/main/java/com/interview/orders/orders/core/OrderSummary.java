@@ -8,18 +8,23 @@ public class OrderSummary {
     int orderNumber;
     double totalCost;
 
+    public OrderSummary(double totalCost, List<ItemWithCost> itemCosts) {
+        this.itemCosts = itemCosts;
+        this.totalCost = totalCost;
+    }
+
     public OrderSummary(int orderNumber, double totalCost, List<ItemWithCost> itemCosts) {
         this.orderNumber = orderNumber;
         this.itemCosts = itemCosts;
         this.totalCost = totalCost;
     }
 
-    public static OrderSummary generateOrderSummary(int orderNumber, List<ItemWithCost> itemCosts) {
+    public static OrderSummary generateOrderSummary(List<ItemWithCost> itemCosts) {
         double totalCost = 0;
         for (ItemWithCost itemCost : itemCosts) {
             totalCost+=itemCost.getCost();
         }
-       return new OrderSummary(orderNumber, totalCost, itemCosts);
+       return new OrderSummary(totalCost, itemCosts);
     }
 
     public List<ItemWithCost> getItemCosts() {

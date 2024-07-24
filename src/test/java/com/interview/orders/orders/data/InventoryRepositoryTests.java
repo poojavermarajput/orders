@@ -22,35 +22,38 @@ public class InventoryRepositoryTests {
 
     @Test
     public void itTestsAddAndRetrievalOfInventory(){
+        List<Inventory> retrievedInventory = inventoryRepository.getInventory();
+        Assert.assertTrue(retrievedInventory.isEmpty());
+
         List<Inventory> inventoryList = new ArrayList<>();
         Inventory inventory = new Inventory();
         inventory.setName("apple");
         inventory.setPrice(10);
         inventoryList.add(inventory);
 
-        List<Inventory> retrievedInventory = inventoryRepository.getInventory();
-        Assert.assertTrue(retrievedInventory.isEmpty());
-
         inventoryRepository.addItems(inventoryList);
 
-        List<Inventory> inventoryListExpected = new ArrayList<>();
-        Inventory inventoryExpected = new Inventory(1, "apple", 10);
-        inventoryListExpected.add(inventoryExpected);
-
         List<Inventory> retrievedInventoryAfterAdding = inventoryRepository.getInventory();
-        Assert.assertEquals(retrievedInventoryAfterAdding, inventoryListExpected);
+        Assert.assertEquals(retrievedInventoryAfterAdding.size(), 1);
+        Assert.assertEquals(retrievedInventoryAfterAdding.get(0).getName(), "apple");
+        Assert.assertEquals(retrievedInventoryAfterAdding.get(0).getPrice(), 10, 0.02);
     }
 
     @Test
     public void itTestsPriceRetrievalOfInventory(){
+        Assert.assertTrue(inventoryRepository.getPrices(List.of("banana")).isEmpty());
+        Assert.assertTrue(inventoryRepository.getPrices(List.of("apple")).isEmpty());
+        Assert.assertTrue(inventoryRepository.getPrices(List.of("orange")).isEmpty());
+
         List<Inventory> inventoryList = new ArrayList<>();
         Inventory inventory = new Inventory();
         inventory.setName("apple");
         inventory.setPrice(10);
         inventoryList.add(inventory);
+
         Inventory inventory2 = new Inventory();
-        inventory.setName("orange");
-        inventory.setPrice(20);
+        inventory2.setName("orange");
+        inventory2.setPrice(20);
         inventoryList.add(inventory2);
 
         inventoryRepository.addItems(inventoryList);

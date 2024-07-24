@@ -8,8 +8,6 @@ public class Inventory {
     private int id;
 
     public Inventory() {
-        this.name = name;
-        this.price = price;
     }
 
     public Inventory(int id, String name, double price) {

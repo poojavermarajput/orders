@@ -7,6 +7,7 @@ import com.interview.orders.orders.service.offer.OfferInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -27,21 +28,17 @@ public class OrdersService {
 
     public OrderSummary addOrder(List<Item> itemList) {
         validateOrder(itemList);
-        Order order = orderRepository.addOrder(itemList);
-
         List<ItemWithCost> itemCosts = getItemCosts(itemList);
-
-        return OrderSummary.generateOrderSummary(order.getOrderNumber(), itemCosts);
-
+        return orderRepository.addOrder(OrderSummary.generateOrderSummary(itemCosts));
     }
 
     private List<ItemWithCost> getItemCosts(List<Item> itemList) {
         Map<String, Double> itemPrices = inventoryService.getPrices(itemList.stream().map((Item::getName)).toList());
         Map<String, Offer> offersByInventoryName = offerService.getOfferByInventoryNames(itemList.stream().map(Item::getName).toList());
-        return calculatePriceByOffer(offersByInventoryName, itemList, itemPrices);
+        return calculateItemPriceByOffer(offersByInventoryName, itemList, itemPrices);
     }
 
-    private List<ItemWithCost> calculatePriceByOffer(Map<String, Offer> offersByInventoryName, List<Item> itemList, Map<String, Double> itemPrices) {
+    private List<ItemWithCost> calculateItemPriceByOffer(Map<String, Offer> offersByInventoryName, List<Item> itemList, Map<String, Double> itemPrices) {
         // for each inventory get offer, then call offerFactory to get offer and calculate offer
 
         List<ItemWithCost> itemWithCosts = new ArrayList<>();
@@ -60,6 +57,14 @@ public class OrdersService {
         }
         return itemWithCosts;
 
+    }
+
+    public OrderSummary getOrder(int orderId) {
+        return orderRepository.getOrder(orderId);
+    }
+
+    public Collection<OrderSummary> getOrders() {
+        return orderRepository.getOrders();
     }
 
     private void validateOrder(List<Item> itemList) {

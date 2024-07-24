@@ -5,6 +5,7 @@ import com.interview.orders.orders.core.OrderSummary;
 import com.interview.orders.orders.service.OrdersService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -19,6 +20,16 @@ public class OrdersController {
     @PostMapping("/order/")
     public OrderSummary addOrder(@RequestBody List<Item> itemList){
         return ordersService.addOrder(itemList);
+    }
+
+    @GetMapping("/order/{orderId}")
+    public OrderSummary getOrder(@PathVariable int orderId){
+        return ordersService.getOrder(orderId);
+    }
+
+    @GetMapping("/order")
+    public Collection<OrderSummary> getAllOrders(){
+        return ordersService.getOrders();
     }
 
 
