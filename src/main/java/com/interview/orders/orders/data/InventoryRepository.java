@@ -17,28 +17,7 @@ public class InventoryRepository {
 
     public static AtomicInteger inventoryId = new AtomicInteger(0);
 
-//    private Map<String, List<Meeting>> meetingMap = new HashMap<>();
-
-
-    @PostConstruct
-    public void init() {
-        /*inventoryId.incrementAndGet();
-        Inventory inventory = new Inventory(inventoryId.get(), "apple", 0.60);
-        inventories.add(inventory);
-        Inventory inventory2 = new Inventory(inventoryId.get(), "orange", 0.25);
-        inventories.add(inventory2);*/
-
-        /*meetingMap.put("Ankit", List.of(new Meeting(1, 2), new Meeting(3, 4), new Meeting(5, 6), new Meeting(10, 11)));
-        meetingMap.put("Pooja", List.of(new Meeting(1, 4), new Meeting(7, 11))); // (2, 5) - (1-5), 7-11
-        meetingMap.put("Smythe", List.of(new Meeting(2, 4), new Meeting(5, 11))); //*/
-    }
     public List<Inventory> getInventory(){
-       /* inventoryId.incrementAndGet();
-        Inventory inventory = new Inventory(inventoryId.get(), "apple", 0.60);
-        inventories.add(inventory);
-        Inventory inventory2 = new Inventory(inventoryId.get(), "orange", 0.25);
-        inventories.add(inventory2);*/
-
         return inventories;
     }
 
@@ -58,9 +37,6 @@ public class InventoryRepository {
                         .toMap(
                                 Inventory::getName,
                                 Inventory::getPrice));
-                                /*(x, y)
-                                        -> x + ", " + y,*/
-                                //HashMap::new));
 
     }
 }

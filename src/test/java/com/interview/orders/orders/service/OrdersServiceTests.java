@@ -65,19 +65,13 @@ public class OrdersServiceTests {
         List<String> itemsNamesList  = items.stream().map(Item::getName).toList();
         when(inventoryService.validateInventory(itemsNamesList)).thenReturn(false);
         ordersService.addOrder(items);
-       /* OrderSummary orderSummaryExpected = new OrderSummary(1, 0.0, itemCosts);
-        Assert.assertEquals(ordersService.addOrder(items), orderSummaryExpected);*/
     }
 
     private List<Item> getItems() {
         List<Item> items = new ArrayList<>();
-        Item item = new Item();
-        item.setName("banana");
-        item.setQuantity(10);
+        Item item = new Item("banana", 10);
 
-        Item item2 = new Item();
-        item.setName("orange");
-        item.setQuantity(15);
+        Item item2 = new Item("orange", 20);
 
         items.add(item2);
         items.add(item);

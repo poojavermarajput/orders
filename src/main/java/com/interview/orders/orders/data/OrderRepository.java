@@ -1,9 +1,6 @@
 package com.interview.orders.orders.data;
 
-
-import com.interview.orders.orders.core.Inventory;
 import com.interview.orders.orders.core.Item;
-import com.interview.orders.orders.core.ItemWithPrice;
 import com.interview.orders.orders.core.Order;
 import org.springframework.stereotype.Repository;
 
@@ -19,9 +16,6 @@ public class OrderRepository {
     public static AtomicInteger orderId = new AtomicInteger(0);
 
     Map<Integer, Order> ordersList = new HashMap<>();
-    public Order getOrder(int orderId){
-        return ordersList.get(orderId);
-    }
 
     public Order addOrder(List<Item> itemList){
         orderId.incrementAndGet();
